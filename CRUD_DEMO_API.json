@@ -1,0 +1,195 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "CRUD_DEMO_LIST",
+    "description" : "simple list of API presente for the CRUD DEMO DATABASE",
+    "version" : "0.1"
+  },
+  "servers" : [ {
+    "url" : "http://localhost:5000"
+  } ],
+  "paths" : {
+    "/list" : {
+      "get" : {
+        "description" : "This call returns the collection of object for the table Users",
+        "parameters" : [],
+        "responses" : {
+          "200" : {
+            "description" : "List with all the users in the database",
+            "content" : {
+              "text/html; charset=utf-8" : {
+                "schema" : {
+                  "type" : "string"
+                },
+                "examples" : {"[{u'age':34,u'_id':ObjectId('5c0e911479d2d80743d6b8ec'),u'surname':u'Aru',u'name':u'Stefano'},{u'age':45,u'_id':ObjectId('5c0e9aad79d2d80743d6b8f0'),u'surname':u'Rossi',u'name':u'Mario'}]"}
+              }
+            }
+          }
+        }
+      }
+    },"/create" : {
+      "get" : {
+        "description" : "This call allows to create new users in the database",
+        "parameters" : [ {
+          "name" : "surname",
+          "in" : "query",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "Rossi"
+        }, {
+          "name" : "name",
+          "in" : "query",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "Mario"
+        }, {
+          "name" : "age",
+          "in" : "query",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "25"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Id of the new user created",
+            "content" : {
+              "text/html; charset=utf-8" : {
+                "schema" : {
+                  "type" : "string"
+                },
+                "examples" : {"5c0e9f7779d2d80743d6b8f6"}
+              }
+            }
+          }
+        }
+      }
+    },"/update" : {
+      "get" : {
+        "description" : "This call allows to modify existent user referred by its id",
+        "parameters" : [ {
+          "name" : "_id",
+          "in" : "query",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "5c0d576479d2d84b31e11a3f"
+        },{
+          "name" : "surname",
+          "in" : "query",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "Rossi"
+        }, {
+          "name" : "name",
+          "in" : "query",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "Mario"
+        }, {
+          "name" : "age",
+          "in" : "query",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "25"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Number of row affected",
+            "content" : {
+              "text/html; charset=utf-8" : {
+                "schema" : {
+                  "type" : "string"
+                },
+                "examples" : {"1"}
+              }
+            }
+          }
+        }
+      }
+    },"/delete" : {
+      "get" : {
+        "description" : "This call allows to delete a record from the table Users",
+        "parameters" : [ {
+          "name" : "_id",
+          "in" : "query",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "5c0d576479d2d84b31e11a3f"
+        }],
+        "responses" : {
+          "200" : {
+            "description" : "Returns the number of rows deleted",
+            "content" : {
+              "text/html; charset=utf-8" : {
+                "schema" : {
+                  "type" : "string"
+                },
+                "examples" : {"0"}
+              }
+            }
+          }
+        }
+      }
+    },"/find" : {
+      "get" : {
+        "description" : "This call returns a single record from the table Users addressed by the user ID",
+        "parameters" : [ {
+          "name" : "_id",
+          "in" : "query",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "5c0d576479d2d84b31e11a3f"
+        }],
+        "responses" : {
+          "200" : {
+            "description" : "Returns user record as a dictionary",
+            "content" : {
+              "text/html; charset=utf-8" : {
+                "schema" : {
+                  "type" : "string"
+                },
+                "examples" : {"0"}
+              }
+            }
+          }
+        }
+      }
+    }
+  
+  }
+}
