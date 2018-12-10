@@ -1,5 +1,5 @@
 # CRUD_DEMO
-This is a simple crud web application to keep it simple I used flask as web server and mongodb as database engine, merging everything with python	
+This is a simple crud web application, to keep it light I used flask as web server and mongodb as database engine, merging everything with python	
 
 we need to install required libraries other than python 2.7
 
