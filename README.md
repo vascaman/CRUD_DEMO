@@ -20,13 +20,13 @@ or
 you can make remote calls to
 localhost:5000/list
 
-localhost:5000/create
+>>localhost:5000/create
 
-localhost:5000/update
+>>localhost:5000/update
 
-localhost:5000/delete
+>>localhost:5000/delete
 
-localhost:5000/find
+>>localhost:5000/find
 
 as listed in the CRUD_DEMO_API.json file
 
