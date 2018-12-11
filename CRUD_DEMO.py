@@ -4,8 +4,11 @@ from flask import redirect
 from flask import request
 from DB_Manager import DBManager
 from listView import ListView
+from frontend import FrontEnd
 from bson.objectid import ObjectId
 from user import checkUserDict
+import urllib2
+import json
 
 DEBUG = True
 
@@ -21,9 +24,6 @@ def operation():
 	args = request.args.to_dict()
 	args.pop("action")
 	request.args = args
-	
-	#if checkUserDict(args) == False:
-	#	return redirect("/viewlist")
 
 	if action == "Create":
 		create()
@@ -33,7 +33,7 @@ def operation():
 
 	if action == "Update":
 		update()
-
+	
 	return redirect("/viewlist")	
 	
 @app.route('/create', methods=['GET', 'POST'])
@@ -47,18 +47,20 @@ def create():
 		requestDict[key] = request.args[key]
 	dbManager = DBManager()
 	returnValue = dbManager.insert("Users", requestDict)
-	return str(returnValue.inserted_id);
+	return str(returnValue.inserted_id)
 
 @app.route('/update')
 def update():
-
+	print("updating")
+	
 	if checkUserDict(request.args) == False:
-		return "malformed request";	
-
+		print "malformed request"
+		return "malformed request"	
+	print("updating")
 	dbManager = DBManager()
 	requestDict = request.args
 	returnValue = dbManager.update("Users", requestDict)
-	return str(returnValue.modified_count);
+	return str(returnValue.modified_count)
 
 @app.route('/delete')
 def delete():
@@ -69,7 +71,7 @@ def delete():
 	dbManager = DBManager()
 	requestDict = {"_id":ObjectId(request.args["_id"])}
 	returnValue = dbManager.delete("Users", requestDict)
-	return str(returnValue.deleted_count);
+	return str(returnValue.deleted_count)
 
 @app.route('/find')
 def find():
@@ -80,19 +82,68 @@ def find():
 	dbManager = DBManager()
 	requestDict = {"_id":ObjectId(request.args["_id"])}
 	returnValue = dbManager.find("Users", requestDict)
-	return str(returnValue);
+	return str(returnValue)
 
 @app.route('/list')
 def list():
+	returnObject=[]
 	dbManager = DBManager()
 	returnValue = dbManager.findAll("Users")
-	x = []
-	for row in returnValue:
-		x.append(row)
-	print(x)
-	return str(x)
+	for record in returnValue:
+		recordDict={}
+		for key in record.keys():	
+			if key == "_id":
+				recordDict[key] = str(ObjectId(record[key]))
+			else:
+				recordDict[key] = record[key]
+		returnObject.append(recordDict)
+		
+	jsonList = json.dumps(returnObject)
+	return jsonList
 
 @app.route('/viewlist')
 def viewList():
 	l = ListView("Users")
 	return l.getHTML()
+
+@app.route('/frontend', methods=['GET', 'POST'])
+def frontend():
+	args = request.args.to_dict()
+	
+	if "action" in args:
+		action = args["action"]
+		args.pop("action")
+		request.args = args
+
+		if action == "Create":
+			callCreate(args)
+		
+		if action == "Delete":
+			callDelete(args)
+
+		if action == "Update":
+			callUpdate(args)
+
+		return redirect("/frontend")
+
+	frontEnd = FrontEnd()
+	return frontEnd.getHTML()
+
+def callUpdate(requestDict):
+	callRemoteAPI("update", requestDict)
+
+def callCreate(requestDict):
+	callRemoteAPI("create", requestDict)
+
+def callDelete(requestDict):
+	callRemoteAPI("delete", requestDict)
+
+def callRemoteAPI(operation, requestDict):
+	remoteServer = "http://localhost:5000/"
+	args="?"
+	for key in requestDict:
+		args+=key+"="+requestDict[key]+"&"
+	completeRequest = remoteServer+operation+args
+	response = urllib2.urlopen(completeRequest)
+
+
