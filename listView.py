@@ -8,6 +8,7 @@ class ListView:
 		
 	def getHTML(self):
 		HTMLString = ""
+		HTMLString += "<h2>Backend</h2>"
 		HTMLString += "<table style=\"width:50%\">"
 		HTMLString+="<tr>"
 		HTMLString+="<th> Name </th>"

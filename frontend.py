@@ -14,6 +14,7 @@ class FrontEnd:
 	
 	def getHTML(self):
 		HTMLString = ""
+		HTMLString += "<h2>Frontend</h2>"		
 		HTMLString += "<table style=\"width:50%\">"
 		HTMLString+="<tr>"
 		HTMLString+="<th> Name </th>"
