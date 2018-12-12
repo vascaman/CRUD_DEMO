@@ -15,7 +15,12 @@ to launch
 
 >FLASK_APP=CRUD_DEMO.py flask run
 
-open a broswer and go to localhost:5000/viewlist for a minimal web interface
+open a broswer and go to localhost:5000/viewlist for a minimal web backend interface
+>>localhost:5000/viewlist
+
+and a light frontend able to call remotes api at
+>>localhost:5000/frontend
+
 or
 you can make remote calls to
 localhost:5000/list
